@@ -36,13 +36,13 @@ def verify_token(request):
 
 class AddUserView(APIView):
     def post(self, request):
-        payload = verify_token(request)
-        print(payload)
-        try:
-            user = User.objects.filter(id=payload['id']).first()
-        except:
-            return payload
-        if user.is_superadmin:            
+        # payload = verify_token(request)
+        # print(payload)
+        # try:
+        #     user = User.objects.filter(id=payload['id']).first()
+        # except:
+        #     return payload
+        # if user.is_superadmin:            
             serializer = UserSerializer(data=request.data)
             if not serializer.is_valid():
                 #print(serializer.errors)
@@ -50,7 +50,7 @@ class AddUserView(APIView):
                 "success":False,
                 "error":'user with this email already exists',
                 "message":"",
-                "data": user.email
+                # "data": user.email
                 })
 
             serializer.save()
@@ -60,15 +60,15 @@ class AddUserView(APIView):
                 "message":"User added successfully",
                 "data":serializer.data
                 })
-        else:
-            return Response({
-                "success":False,
-                "error":"Not authorized to access this page",
-                "message":"",
-                "data":{
-                    "email":user.email
-                }
-            })
+        # else:
+        #     return Response({
+        #         "success":False,
+        #         "error":"Not authorized to access this page",
+        #         "message":"",
+        #         "data":{
+        #             "email":user.email
+        #         }
+        #     })
 
 
 class EditUser(APIView):
