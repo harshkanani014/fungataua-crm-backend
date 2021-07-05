@@ -22,6 +22,14 @@ def verify_token(request):
             "message":"",
             }
         payload = JsonResponse(context)
+        
+    if not token:
+        context = {
+                "success":False,
+                "error":"UnAuthenticated",
+                "message":"",
+            }
+        payload =  JsonResponse(context)
     try:
         payload = jwt.decode(token, 'secret', algorithm=['HS256'])
     except :
