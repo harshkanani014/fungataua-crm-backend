@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-*z7pyhbw&)+a_e-=7m9*!8m43euokx68vdw9fgo*=uh^yymai0
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -44,6 +44,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
@@ -95,6 +96,9 @@ DATABASES = {
     }
 }
 
+import dj_database_url 
+prod_db  =  dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(prod_db)
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -150,5 +154,6 @@ CORS_ORIGIN_WHITELIST = (
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'accounts.User'
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 # ACCOUNT_USERNAME_REQUIRED = False
 # ACCOUNT_USER_MODEL_USERNAME_FILED = None
