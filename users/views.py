@@ -10,11 +10,11 @@ from django.db.models import Q
 # Create your views here.
 
 def verify_token(request):
-    if not (request.headers['Authorization'] == "null"):
-            token = request.headers['Authorization']
-    # if not (request.COOKIES.get('token') == "null"):
-    #     token = request.COOKIES.get('token')
-        #print(token)
+    # if not (request.headers['Authorization'] == "null"):
+    #         token = request.headers['Authorization']
+    if not (request.COOKIES.get('token') == "null"):
+        token = request.COOKIES.get('token')
+        print(token)
     else:
         context = {
             "success":False,
@@ -22,6 +22,14 @@ def verify_token(request):
             "message":"",
             }
         payload = JsonResponse(context)
+    if not token:
+        context = {
+                "success":False,
+                "error":"UnAuthenticated",
+                "message":"",
+            }
+        payload =  JsonResponse(context)
+
     try:
         payload = jwt.decode(token, 'secret', algorithm=['HS256'])
     except :
@@ -36,13 +44,13 @@ def verify_token(request):
 
 class AddUserView(APIView):
     def post(self, request):
-        # payload = verify_token(request)
-        # print(payload)
-        # try:
-        #     user = User.objects.filter(id=payload['id']).first()
-        # except:
-        #     return payload
-        # if user.is_superadmin:            
+        payload = verify_token(request)
+        print(payload)
+        try:
+            user = User.objects.filter(id=payload['id']).first()
+        except:
+            return payload
+        if user.is_superadmin:            
             serializer = UserSerializer(data=request.data)
             if not serializer.is_valid():
                 #print(serializer.errors)
@@ -60,15 +68,15 @@ class AddUserView(APIView):
                 "message":"User added successfully",
                 "data":serializer.data
                 })
-        # else:
-        #     return Response({
-        #         "success":False,
-        #         "error":"Not authorized to access this page",
-        #         "message":"",
-        #         "data":{
-        #             "email":user.email
-        #         }
-        #     })
+        else:
+            return Response({
+                "success":False,
+                "error":"Not authorized to access this page",
+                "message":"",
+                "data":{
+                    "email":user.email
+                }
+            })
 
 
 class EditUser(APIView):
