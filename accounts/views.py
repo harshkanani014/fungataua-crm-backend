@@ -9,21 +9,7 @@ import jwt, datetime
 import random
 import time
 from django.http import JsonResponse
-from twilio.rest import Client
 
-def send_sms(otp):
-
-    # Your Account SID from twilio.com/console
-    account_sid = "ACb92105d6cb505863a13e05bef39dc8bd"
-    # Your Auth Token from twilio.com/console
-    auth_token  = "44705a3ce65f65f5c7bffc47e398311e"
-
-    client = Client(account_sid, auth_token)
-    
-    message = client.messages.create(
-        to="+919874307594", 
-        from_="+12512903658",
-        body="Your otp is " + str(otp)  + " only valid for 05 mins ")
 
 # def verify_token(request):
 #     # if not (request.headers['Authorization'] == "null"):
@@ -92,7 +78,6 @@ class LoginView(APIView):
         otp = random.randint(1000, 9999)
                 #login(request, user)
         print("otp :",  otp)
-        send_sms(otp)
         expire_at = time.time() + 300
 
 

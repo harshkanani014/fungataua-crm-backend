@@ -1,1 +1,0 @@
-web: gunicorn fungataua_backend.wsgi --log-file -

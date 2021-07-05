@@ -14,7 +14,7 @@ def verify_token(request):
             token = request.headers['Authorization']
     # if not (request.COOKIES.get('token') == "null"):
     #     token = request.COOKIES.get('token')
-    #     print(token)
+        #print(token)
     else:
         context = {
             "success":False,
@@ -22,14 +22,6 @@ def verify_token(request):
             "message":"",
             }
         payload = JsonResponse(context)
-    if not token:
-        context = {
-                "success":False,
-                "error":"UnAuthenticated",
-                "message":"",
-            }
-        payload =  JsonResponse(context)
-
     try:
         payload = jwt.decode(token, 'secret', algorithm=['HS256'])
     except :
@@ -58,7 +50,7 @@ class AddUserView(APIView):
                 "success":False,
                 "error":'user with this email already exists',
                 "message":"",
-                # "data": user.email
+                "data": user.email
                 })
 
             serializer.save()
