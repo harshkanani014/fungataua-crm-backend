@@ -11,11 +11,11 @@ from .models import *
 # Create your views here.
 
 def verify_token(request):
-    # if not (request.headers['Authorization'] == "null"):
-    #         token = request.headers['Authorization']
-    if not (request.COOKIES.get('token') == "null"):
-        token = request.COOKIES.get('token')
-        print(token)
+    if not (request.headers['Authorization'] == "null"):
+            token = request.headers['Authorization']
+    # if not (request.COOKIES.get('token') == "null"):
+    #     token = request.COOKIES.get('token')
+    #     print(token)
     else:
         context = {
             "success":False,

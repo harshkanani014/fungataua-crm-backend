@@ -21,7 +21,7 @@ def send_sms(otp):
     client = Client(account_sid, auth_token)
     
     message = client.messages.create(
-        to="+917048475675", 
+        to="+919874307594", 
         from_="+12512903658",
         body="Your otp is " + str(otp)  + " only valid for 05 mins ")
 
