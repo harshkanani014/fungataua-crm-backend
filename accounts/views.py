@@ -14,15 +14,15 @@ from twilio.rest import Client
 def send_sms(otp):
 
     # Your Account SID from twilio.com/console
-    account_sid = "ACb92105d6cb505863a13e05bef39dc8bd"
+    account_sid = "ACa1642a0cd30b97eba7d1eb43fbb601d0"
     # Your Auth Token from twilio.com/console
-    auth_token  = "44705a3ce65f65f5c7bffc47e398311e"
+    auth_token  = "cfe0c9e4cbb3213d14866d25525f85b7"
 
     client = Client(account_sid, auth_token)
     
     message = client.messages.create(
         to="+919874307594", 
-        from_="+12512903658",
+        from_="+17652957894",
         body="Your otp is " + str(otp)  + " only valid for 05 mins ")
 
 

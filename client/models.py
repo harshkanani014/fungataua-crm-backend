@@ -27,7 +27,6 @@ class Client(models.Model):
 
 class Services(models.Model):
     service_name = models.TextField(max_length=1000)
-    status = models.ForeignKey(to=Status, on_delete=models.CASCADE)
     is_enabled = models.BooleanField(default=True)
 
     def __str__(self):
@@ -36,7 +35,6 @@ class Services(models.Model):
 
 class SubCategory(models.Model):
     subcategory_name = models.TextField(max_length=1000)
-    status = models.ForeignKey(to=Status, on_delete=models.CASCADE)
     is_enabled = models.BooleanField(default=True)
 
     def __str__(self):
@@ -45,7 +43,6 @@ class SubCategory(models.Model):
 
 class Category(models.Model):
     category_name = models.TextField(max_length=1000)
-    status = models.ForeignKey(to=Status, on_delete=models.CASCADE)
     is_enabled = models.BooleanField(default=True)
     subcategory = models.ForeignKey(to=SubCategory, on_delete=models.CASCADE)    
 
