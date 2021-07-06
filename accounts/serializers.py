@@ -6,9 +6,10 @@ from .models import User
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['name', 'email', 'password','phone_number', 'client_add', 'client_edit', 'services_add', 'services_edit', 'category_add', 'category_edit', 'status_add', 'status_edit', 'is_enabled', 'is_superadmin']
+        fields = ['id', 'name', 'email', 'password','phone_number', 'client_add', 'client_edit', 'services_add', 'services_edit', 'category_add', 'category_edit', 'status_add', 'status_edit', 'is_enabled', 'is_superadmin']
         extra_kwargs = {
-            'password': {'write_only': True}
+            'password': {'write_only': True},
+            'id':{'read_only': True}
         }
     def update(self, instance, validated_data):
         if(instance.password):
