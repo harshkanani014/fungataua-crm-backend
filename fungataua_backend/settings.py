@@ -160,7 +160,7 @@ CORS_ORIGIN_ALLOW_ALL = False
 CORS_ALLOW_CREDENTIALS = True
 
 CORS_ORIGIN_WHITELIST = (
-       'http://localhost:3000', 'https://deploy-preview-3--funtuama-crm-dev.netlify.app'
+       'http://localhost:3000', 'https://deploy-preview-3--funtuama-crm-dev.netlify.app', 'https://funtuama-crm-prod.netlify.app'
 )
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
