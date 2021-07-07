@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from rest_framework import serializers
 from accounts.models import User
 from accounts.serializers import UserSerializer
 from rest_framework.response import Response
@@ -42,6 +43,13 @@ def verify_token(request):
     print(payload)
     return payload
 
+def get_error(serializerErr):
+    err = ''
+    for i in serializerErr:
+        err = serializerErr[i][0]
+        break    
+    return err
+
 class AddUserView(APIView):
     def post(self, request):
         payload = verify_token(request)
@@ -56,7 +64,7 @@ class AddUserView(APIView):
                 #print(serializer.errors)
                 return Response({
                 "success":False,
-                "error":'user with this email already exists',
+                "error":get_error(serializer.errors),
                 "message":"",
                 "data": user.email
                 })
@@ -82,22 +90,21 @@ class AddUserView(APIView):
 class EditUser(APIView):
     # authentication_classes = (CsrfExemptSessionAuthentication, BasicAuthentication)
     serializer_class = UserSerializer
-    def put(self, request,email):
+    def put(self, request, id):
         payload = verify_token(request)
         try:
             user = User.objects.filter(id=payload['id']).first()
         except:
             return payload
-        if email==user.email:
-            return Response({
-                'success':False,
-                'error':'User cannot change his own mail',
-                'message':''
-            })
+        # if payload['email']==user.email:
+        #     return Response({
+        #         'success':False,
+        #         'error':'User cannot change his own mail',
+        #         'message':''
+        #     })
         if user.is_superadmin:
             try:
-                print(email)
-                requestuser = User.objects.get(email=email)
+                requestuser = User.objects.get(id=id)
                 
             except User.DoesNotExist:
                 return Response({
@@ -155,10 +162,12 @@ class GetUser(APIView):
             return Response({
                 'success': True,
                 'error': "",
-                'data': serializer.data,
-                'totalItems': total,
-                'currentPage': page,
-                'totalPage': math.ceil(total / per_page)
+                'data': {
+                    'data': serializer.data,
+                    'totalItems': total,
+                    'currentPage': page,
+                    'totalPage': math.ceil(total / per_page)
+                }
             }) 
         else:
             context = {
