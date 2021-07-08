@@ -11,11 +11,13 @@ from django.db.models import Q
 # Create your views here.
 
 def verify_token(request):
-    if not (request.headers['Authorization'] == "null"):
+    try:
+        if not (request.headers['Authorization'] == "null"):
             token = request.headers['Authorization']
-    # if not (request.COOKIES.get('token') == "null"):
-    #     token = request.COOKIES.get('token')
-    #     print(token)
+    except:
+        if not (request.COOKIES.get('token') == "null"):
+            token = request.COOKIES.get('token')
+            print(token)
     else:
         context = {
             "success":False,

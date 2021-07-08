@@ -1,6 +1,7 @@
+from django.db import models
 from django.db.models import fields
 from rest_framework import serializers
-from .models import Status, Services, SubCategory, Category
+from .models import Status, Services, SubCategory, Category, Client, Client_images, client_service_records
 
 
 class StatusSerializer(serializers.ModelSerializer):
@@ -66,7 +67,6 @@ class SubCategorySerializer(serializers.ModelSerializer):
         return instance
 
 class CategorySerializer(serializers.ModelSerializer):
-    #subcategory = SubCategorySerializer(many=True)
     class Meta:
         model = Category
         fields = ('id', 'category_name', 'is_enabled', 'subcategory')
@@ -74,7 +74,66 @@ class CategorySerializer(serializers.ModelSerializer):
             'id': {'read_only': True}
         }
     
+    def create(self, validated_data):
+        instance = self.Meta.model(**validated_data)
+        instance.save()
+        return instance
 
+    def update(self, instance, validated_data):
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+        instance.save()
+        return instance
+
+
+class ClientSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Client
+        fields = '__all__'
+        extra_kwargs = {
+            'id': {'read_only': True}
+        }
+
+    def create(self, validated_data):
+        instance = self.Meta.model(**validated_data)
+        instance.save()
+        return instance
+
+    def update(self, instance, validated_data):
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+        instance.save()
+        return instance
+
+
+class ClientImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Client_images
+        fields = '__all__'
+        extra_kwargs = {
+            'id': {'read_only': True}
+        }
+    
+    def create(self, validated_data):
+        instance = self.Meta.model(**validated_data)
+        instance.save()
+        return instance
+
+    def update(self, instance, validated_data):
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+        instance.save()
+        return instance
+
+class client_service_records_serializer(serializers.ModelSerializer):
+    class Meta:
+        model = client_service_records
+        fields = '__all__'
+        extra_kwargs = {
+            'id': {'read_only': True},
+            'date_of_visit': {'read_only':True}
+        }
+      
     def create(self, validated_data):
         instance = self.Meta.model(**validated_data)
         instance.save()

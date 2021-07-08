@@ -1,3 +1,4 @@
+from accounts.models import User
 from django.db import models
 from datetime import date
 # Create your models here.
@@ -11,17 +12,21 @@ class Status(models.Model):
 class Client(models.Model):
     first_name = models.TextField(max_length=1000)
     last_name = models.TextField(max_length=1000) 
-    email = models.EmailField()
+    email = models.EmailField(unique=True)
     date_of_birth = models.DateField()
     phone_number = models.TextField(max_length=20)
     gender = models.TextField(max_length=20)
     address = models.TextField(max_length=10000) 
     state = models.TextField(max_length=1000)
     city = models.TextField(max_length=1000)
-    image = models.ImageField(upload_to="client_images/")
     
     def __str__(self):
         return self.email
+
+class Client_images(models.Model):
+    email = models.ForeignKey(to=Client, on_delete=models.CASCADE)
+    image_name = models.TextField(max_length=1000, default="Image")
+    image = models.TextField(null=True)
 
 
 class Services(models.Model):
@@ -40,6 +45,7 @@ class SubCategory(models.Model):
         return self.subcategory_name
 
 
+
 class Category(models.Model):
     category_name = models.TextField(max_length=1000)
     is_enabled = models.BooleanField(default=True)
@@ -51,13 +57,11 @@ class Category(models.Model):
 
 # The below table is the table for many to many relationship between client entity and service entity
 class client_service_records(models.Model):
-    date_of_visit = models.DateField(default=date.today())
+    date_of_visit = models.DateField(default=date.today()) 
+    added_by = models.ForeignKey(to=User, on_delete=models.CASCADE, default=2)
     email = models.ForeignKey(to=Client, on_delete=models.CASCADE)
     services = models.ForeignKey(to=Services, on_delete=models.CASCADE)
     category = models.ForeignKey(to=Category, on_delete=models.CASCADE)
     subcategory = models.ForeignKey(to=SubCategory, on_delete=models.CASCADE)
     status = models.ForeignKey(to=Status, on_delete=models.CASCADE, default=0)
     remarks = models.TextField(max_length=10000, default="")
-   
-
-     
