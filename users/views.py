@@ -62,14 +62,14 @@ def get_error(serializerErr):
 class AddUserView(APIView):
     def post(self, request):
         # Verify token i.e checks user is authenticated or not
-        # payload = verify_token(request)
-        # try:
-        #     user = User.objects.filter(id=payload['id']).first()
-        # except:
-        #     return payload
+        payload = verify_token(request)
+        try:
+            user = User.objects.filter(id=payload['id']).first()
+        except:
+            return payload
         
         # checks user is superadmin or not
-        # if user.is_superadmin:            
+        if user.is_superadmin:            
             serializer = UserSerializer(data=request.data)
             if not serializer.is_valid():
                 return Response({
@@ -87,15 +87,15 @@ class AddUserView(APIView):
                 "data":serializer.data
                 })
 
-        # else:
-        #     return Response({
-        #         "success":False,
-        #         "error":"Not authorized to access this page",
-        #         "message":"",
-        #         "data":{
-        #             "email":user.email
-        #         }
-        #     })
+        else:
+            return Response({
+                "success":False,
+                "error":"Not authorized to access this page",
+                "message":"",
+                "data":{
+                    "email":user.email
+                }
+            })
 
 
 # Function to Edit User Details
