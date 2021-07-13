@@ -2,8 +2,9 @@ from rest_framework import serializers
 from .models import User
 
 
-
+# superAdmin serializer for saving, editing admin/superadmin
 class UserSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = User
         fields = ['id', 'name', 'email', 'password','phone_number', 'client_add', 'client_edit', 'services_add', 'services_edit', 'category_add', 'category_edit', 'status_add', 'status_edit', 'is_enabled', 'is_superadmin']
@@ -11,6 +12,7 @@ class UserSerializer(serializers.ModelSerializer):
             'password': {'write_only': True},
             'id':{'read_only': True}
         }
+
     def update(self, instance, validated_data):
         if(instance.password):
             for attr, value in validated_data.items():
@@ -25,7 +27,6 @@ class UserSerializer(serializers.ModelSerializer):
         else:
             instance.save()
             return instance
-
 
     def create(self, validated_data):
         password = validated_data.pop('password', None)

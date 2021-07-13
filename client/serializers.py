@@ -1,9 +1,7 @@
-from django.db import models
-from django.db.models import fields
 from rest_framework import serializers
 from .models import Status, Services, SubCategory, Category, Client, Client_images, client_service_records
 
-
+# Serializer to create and update status
 class StatusSerializer(serializers.ModelSerializer):
     class Meta:
         model = Status
@@ -24,7 +22,7 @@ class StatusSerializer(serializers.ModelSerializer):
         return instance
 
 
-
+# Serializer to create and update services
 class ServiceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Services
@@ -46,6 +44,7 @@ class ServiceSerializer(serializers.ModelSerializer):
         return instance
 
 
+# Serializer to create and update subcategory
 class SubCategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = SubCategory
@@ -66,6 +65,8 @@ class SubCategorySerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
+
+# Serializer to create and update category
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
@@ -86,6 +87,7 @@ class CategorySerializer(serializers.ModelSerializer):
         return instance
 
 
+# # Serializer to create and update Client Serializer
 class ClientSerializer(serializers.ModelSerializer):
     class Meta:
         model = Client
@@ -106,12 +108,14 @@ class ClientSerializer(serializers.ModelSerializer):
         return instance
 
 
+# Serializer to create and update Client Image
 class ClientImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Client_images
         fields = '__all__'
         extra_kwargs = {
-            'id': {'read_only': True}
+            'id': {'read_only': True},
+            'date_of_add':{'read_only': True}
         }
     
     def create(self, validated_data):
@@ -125,6 +129,8 @@ class ClientImageSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
+
+# Serializer to create and update Client Service Records
 class client_service_records_serializer(serializers.ModelSerializer):
     class Meta:
         model = client_service_records

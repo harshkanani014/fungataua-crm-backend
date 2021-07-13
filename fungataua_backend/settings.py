@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'accounts',
     'users',
     'client',
+    'dashboard',
 ]
 
 MIDDLEWARE = [
@@ -88,16 +89,27 @@ WSGI_APPLICATION = 'fungataua_backend.wsgi.application'
 #     }
 # }
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'fungataua_db2',
+#         'USER': 'postgres',
+#         'PASSWORD': '1234',
+#         'HOST': 'localhost'
+#     }
+# }
+
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'testapi2',
-        'USER': 'postgres',
-        'PASSWORD': '1234',
-        'HOST': 'localhost'
+        'NAME': 'db1586l0f12bqn',
+        'USER': 'herphvuzucpsqn',
+        'PASSWORD': '7d1d26ddef40eb51584ed3726658d26fdc49bbd6e6021630465bce9f88f22e32',
+        'HOST': 'ec2-34-193-101-0.compute-1.amazonaws.com',
+        'PORT': 5432
     }
 }
-
 
 import dj_database_url 
 prod_db  =  dj_database_url.config(conn_max_age=500)
@@ -148,8 +160,8 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(PROJECT_ROOT, 'static'),
 )
-# MEDIA_URL = '/media/'
-# MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
@@ -160,10 +172,17 @@ CORS_ORIGIN_ALLOW_ALL = False
 CORS_ALLOW_CREDENTIALS = True
 
 CORS_ORIGIN_WHITELIST = (
-       'http://localhost:3000', 'https://deploy-preview-3--funtuama-crm-dev.netlify.app', 'https://funtuama-crm-prod.netlify.app'
+       'http://localhost:3000', 'https://fungataua-crm-prod.netlify.app'
 )
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'accounts.User'
 # ACCOUNT_USERNAME_REQUIRED = False
 # ACCOUNT_USER_MODEL_USERNAME_FILED = None
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = "Kaleemaziya100@gmail.com"
+EMAIL_HOST_PASSWORD = "DropTaxi@1234"
