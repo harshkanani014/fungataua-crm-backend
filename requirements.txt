@@ -15,6 +15,7 @@ pytz==2021.1
 requests==2.25.1
 six==1.16.0
 sqlparse==0.4.1
+tablib==3.0.0
 twilio==6.61.0
 urllib3==1.26.6
 whitenoise==5.2.0
