@@ -73,21 +73,21 @@ class LoginView(APIView):
         
         otp = random.randint(1000, 9999)      
         print("otp :", otp)
-        send_email(str(otp), email)
-        # try:
-        #     send_email(str(otp), email)
-        # except:
-        #     context = {
-        #         "success":False,
-        #         "error":"Unable to send otp to given E-Mail",
-        #         "message":"",
-        #         "data":
-        #         {
-        #             "email":email,
-        #             "is_active":False
-        #         }
-        #     }
-        #     return JsonResponse(context)
+        
+        try:
+            send_email(str(otp), email)
+        except:
+            context = {
+                "success":False,
+                "error":"Unable to send otp to given E-Mail",
+                "message":"",
+                "data":
+                {
+                    "email":email,
+                    "is_active":False
+                }
+            }
+            return JsonResponse(context)
 
         expire_at = time.time() + 300
 
