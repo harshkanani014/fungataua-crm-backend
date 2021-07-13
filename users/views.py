@@ -76,7 +76,7 @@ class AddUserView(APIView):
                 "success":False,
                 "error":get_error(serializer.errors),
                 "message":"",
-                # "data": user.email
+                "data": user.email
                 })
 
             serializer.save()
