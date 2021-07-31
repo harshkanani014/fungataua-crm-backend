@@ -13,5 +13,7 @@ urlpatterns = [
 
     path('download-client-service-report/<int:id>', DownloadEachClientServiceReport, name="client_service_report"),
 
-    path('download-client-service-report-datewise', DownloadClientServiceReportDatewise, name="client_service_report_datewise")
+    path('download-client-service-report-datewise', DownloadClientServiceReportDatewise, name="client_service_report_datewise"),
+
+    path('get-referral-pie-chart', ReferralPieChart.as_view())
 ]

@@ -984,7 +984,7 @@ class GetClientService(APIView):
                 single_service.update({"date_of_visit":i.date_of_visit})
                 
                 for j in added_by_var:
-                    single_service.update({"added_by":j.email})
+                    single_service.update({"added_by":j.name})
                     
                 for j in services_var:
                     single_service.update({"service_name":j.service_name})

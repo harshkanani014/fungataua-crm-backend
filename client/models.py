@@ -20,10 +20,9 @@ class Client(models.Model):
     phone_number = models.TextField(max_length=20)
     gender = models.TextField(max_length=20)
     address = models.TextField(max_length=10000) 
-    state = models.TextField(max_length=1000)
     city = models.TextField(max_length=1000)
     ethinicity = models.TextField(max_length=1000)
-    emergency_phone_number = models.TextField(max_length=20)
+    emergency_phone_number = models.TextField(max_length=20, null=True)
     
     def __str__(self):
         return self.email
@@ -71,6 +70,7 @@ class client_service_records(models.Model):
     added_by = models.ForeignKey(to=User, on_delete=models.CASCADE)
     email = models.ForeignKey(to=Client, on_delete=models.CASCADE)
     services = models.ForeignKey(to=Services, on_delete=models.CASCADE)
+    refered_by = models.TextField(max_length=1000, null=True)
     category = models.ForeignKey(to=Category, on_delete=models.CASCADE)
     subcategory = models.ForeignKey(to=SubCategory, on_delete=models.CASCADE)
     status = models.ForeignKey(to=Status, on_delete=models.CASCADE)

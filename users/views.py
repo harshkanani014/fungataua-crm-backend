@@ -68,7 +68,7 @@ class AddUserView(APIView):
         except:
             return payload
         
-        # checks user is superadmin or not
+        #checks user is superadmin or not
         if user.is_superadmin:            
             serializer = UserSerializer(data=request.data)
             if not serializer.is_valid():

@@ -97,6 +97,31 @@ class ClientChart(APIView):
             })
 
 
+# API for generating Pie Chart
+class ReferralPieChart(APIView):
+    def get(self, request):
+        all_services = client_service_records.objects.all()
+        d=dict()
+        for i in all_services:
+            if (i.services.service_name not in d):
+                d[i.services.service_name]=1
+            else:
+                d[i.services.service_name]+=1
+        lables=[]
+        dataset=[]
+        for i in d:
+            lables.append(i)
+            dataset.append(d[i])
+        return Response({
+                'success': True,
+                'error': "",
+                'data': {
+                    "labels":lables,
+                    "data": dataset,
+
+                }
+            })
+
 # API for downloading client report
 def DownloadClientReport(request):
 
@@ -169,5 +194,8 @@ def DownloadEachClientServiceReport(request, id):
         response = HttpResponse(data.csv, content_type='application/vnd.ms-excel;charset=utf-8')
         response['Content-Disposition'] = "attachment; filename=each_client_service_report_export.csv"
         return response
+
+
+
 
 

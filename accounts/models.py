@@ -7,7 +7,7 @@ class User(AbstractUser):
     name = models.TextField(max_length=100)
     email = models.EmailField(unique=True)
     password = models.TextField(max_length=100)
-    phone_number = models.TextField(max_length=1000)
+    phone_number = models.TextField(max_length=1000, null=True)
     client_add = models.BooleanField(default=False)
     client_edit = models.BooleanField(default=False)
     services_add = models.BooleanField(default=False)
