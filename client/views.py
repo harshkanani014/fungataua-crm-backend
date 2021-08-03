@@ -982,6 +982,7 @@ class GetClientService(APIView):
                 single_service = dict()
                 single_service.update({"id":i.id})
                 single_service.update({"date_of_visit":i.date_of_visit})
+                single_service.update({"refered_by": i.refered_by})
                 
                 for j in added_by_var:
                     single_service.update({"added_by":j.name})
