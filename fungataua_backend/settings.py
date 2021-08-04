@@ -63,7 +63,7 @@ ROOT_URLCONF = 'fungataua_backend.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'reactapp/build')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -155,11 +155,15 @@ USE_TZ = True
 
 #PROJECT_ROOT   =   os.path.join(os.path.abspath(__file__))
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-STATIC_ROOT  =   os.path.join(PROJECT_ROOT, 'staticfiles')
+# STATIC_ROOT  =   os.path.join(PROJECT_ROOT, 'staticfiles')
+STATIC_ROOT  =   os.path.join(PROJECT_ROOT, 'reactapp/build/staticfiles')
 STATIC_URL = '/static/'
-STATICFILES_DIRS = (
-    os.path.join(PROJECT_ROOT, 'static'),
-)
+# STATICFILES_DIRS = (
+#     os.path.join(PROJECT_ROOT, 'static'),
+# )
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'reactapp/build/static'),
+]
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
@@ -172,7 +176,7 @@ CORS_ORIGIN_ALLOW_ALL = False
 CORS_ALLOW_CREDENTIALS = True
 
 CORS_ORIGIN_WHITELIST = (
-       'http://localhost:3000', 'https://fungataua-crm-prod.netlify.app'
+       'http://localhost:3000', 'https://fungataua-crm-prod.netlify.app', 'http://localhost:8000', 'https://fungataua-crm-test.herokuapp.com'
 )
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
@@ -184,5 +188,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = "Kaleemaziya100@gmail.com"
-EMAIL_HOST_PASSWORD = "DropTaxi@1234"
+EMAIL_HOST_USER = "fungatauatrust@gmail.com"
+EMAIL_HOST_PASSWORD = "fungataua@1234"
+
+# SECURE_SSL_REDIRECT=False
+# ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'http'
